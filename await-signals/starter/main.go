@@ -3,14 +3,23 @@ package main
 import (
 	"context"
 	"fmt"
-	await_signals "github.com/temporalio/samples-go/await-signals"
 	"log"
 	"math/rand"
 	"time"
 
+	await_signals "github.com/temporalio/samples-go/await-signals"
+
 	"github.com/pborman/uuid"
 	"go.temporal.io/sdk/client"
 )
+
+func makeRange(min, max int) []int {
+	a := make([]int, max-min+1)
+	for i := range a {
+		a[i] = min + i
+	}
+	return a
+}
 
 func main() {
 	// The client is a heavyweight object that should be created once per process.
@@ -34,7 +43,7 @@ func main() {
 	log.Println("Started workflow", "WorkflowID", we.GetID(), "RunID", we.GetRunID())
 
 	log.Println("Sending signals")
-	signals := []int{1, 2, 3}
+	signals := makeRange(1, 1000)
 	// Send signals in random order
 	rand.Shuffle(len(signals), func(i, j int) { signals[i], signals[j] = signals[j], signals[i] })
 	for _, signal := range signals {

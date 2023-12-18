@@ -54,3 +54,5 @@ go run await-signals/worker/main.go
 ```
 go run await-signals/starter/main.go
 ```
+
+**This sample has been modified from the samples repo to send 1000+ signals rather than only 3, to provide an example of a complex migration.**
